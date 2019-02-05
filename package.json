@@ -1,0 +1,19 @@
+{
+  "name": "coffee-critic",
+  "version": "1.0.0",
+  "description": "A yelp like web application for reviewing coffee shops",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyler-simmons/CoffeeCritic.git"
+  },
+  "author": "Tyler Simmons",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tyler-simmons/CoffeeCritic/issues"
+  },
+  "homepage": "https://github.com/tyler-simmons/CoffeeCritic#readme"
+}
