@@ -92,7 +92,7 @@ router.get("/:id/edit", middleware.checkShopOwnership, function(req, res){
 // UPDATE ROUTE (REQUIRES METHOD-OVERRIDE) - PUT REQUEST TO UPDATE SHOP DB ENTRY
 router.put("/:id",middleware.checkShopOwnership, function(req, res){
     // find and update the correct shop
-    Campground.findOneAndUpdate({"_id": req.params.id}, req.body.shop/*Update entire object*/, function(err, updatedCampground){
+    Shop.findOneAndUpdate({"_id": req.params.id}, req.body.shop/*Update entire object*/, function(err, updatedCampground){
        if(err){
            res.redirect("/shops");
        } else {
@@ -104,7 +104,7 @@ router.put("/:id",middleware.checkShopOwnership, function(req, res){
 
 // DESTROY CAMPGROUND ROUTE (REQUIRES METHOD-OVERRIDE)
 router.delete("/:id",middleware.checkShopOwnership, function(req, res){
-   Campground.findOneAndDelete({"_id": req.params.id}, function(err){
+   Shop.findOneAndDelete({"_id": req.params.id}, function(err){
       if(err){
           res.redirect("/shops");
       } else {
