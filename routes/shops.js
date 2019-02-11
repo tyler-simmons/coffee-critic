@@ -82,8 +82,8 @@ router.get("/:id", function(req, res){
 // EDIT ROUTE - RENDER FORM TO REDIRECT TO PUT ROUTE
 // Validate ownership before retrieving form
 router.get("/:id/edit", middleware.checkShopOwnership, function(req, res){
-    Shop.findOne({"_id": req.params.id}, function(err, foundCampground){
-        res.render("shops/edit.ejs", {campground: foundCampground});
+    Shop.findOne({"_id": req.params.id}, function(err, queriedShop){
+        res.render("shops/edit.ejs", {shop: queriedShop});
     });
 });
 
