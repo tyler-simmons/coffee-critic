@@ -61,7 +61,7 @@ app.use(function(req, res, next){
 // CONNECT ROUTES
 app.use("/", indexRoutes);
 app.use("/shops", shopRoutes);
-app.use("shops/:id/comments", commentRoutes);
+app.use("/shops/:id/comments", commentRoutes);
 
 
 // BUILD FOR DEPLOYMENT ON HEROKU TEST SERVER -- USE PROCESS ENVIRONMENT VARIABLES TO LISTEN
