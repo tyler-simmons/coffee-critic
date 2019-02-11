@@ -65,8 +65,13 @@ app.use("/shops/:id/comments", commentRoutes);
 
 
 // BUILD FOR DEPLOYMENT ON HEROKU TEST SERVER -- USE PROCESS ENVIRONMENT VARIABLES TO LISTEN
-app.listen(process.env.PORT, process.env.IP, function(){
-	console.log("Server started successfully");
+// app.listen(process.env.PORT, process.env.IP, function(){
+// 	console.log("Server started successfully");
+// });
+
+//Listen for requests on local machine
+app.listen(3000, function(){
+	console.log("Server running on local machine");
 });
 
 //local debug
