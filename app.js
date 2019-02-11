@@ -1,30 +1,45 @@
-// BASIC DEPLOYMENT FOR HEROKU HOSTING
-var express = require("express"),
-	app = express(),
-	bodyParser = require("body-parser"),			//pull data from form in req object
-	mongoose = require("mongoose"),					//interact with mongo
-	flash = require("connect-flash"),				//flash messages for auth notification with passport
-	passport = require("passport"),					//user authentication (with sessions)
-	LocalStrategy = require("passport-local"),		//Non-db passport strategy (not in use)
-	methodOverride = require("method-override"),	//Not using express router -- allow PUT/DELETE req by ?_method=PUT || ?_method=DELETE
-	seedDB = require("./seeds");
+/********************************************
+ *											*
+ *			Install Dependencies			*
+ *											*
+ ******************************************	*/
+var express 		= require("express"),
+	app 			= express(),
+	bodyParser 		= require("body-parser"),			/*DEPENDENCY*/	//pull data from form in req object
+	mongoose 		= require("mongoose"),				/*DEPENDENCY*/	//interact with mongo
+	flash 			= require("connect-flash"),			/*DEPENDENCY*/	//flash messages for auth notification with passport
+	passport 		= require("passport"),				/*DEPENDENCY*/	//user authentication (with sessions)
+	LocalStrategy 	= require("passport-local"),		/*DEPENDENCY*/	//Non-db passport strategy (not in use)
+	methodOverride 	= require("method-override"),		/*DEPENDENCY*/	//Allow post override to PUT | DELETE
+	seedDB 			= require("./seeds");
 
 
 
-// IMPORT DATA MODELS - MONGO
-var Shop = require("./models/shop"),
-	Comment = require("./models/comment"),
-	User = require("./models/user");
+/********************************************
+ *											*
+ *		Import Data Models (Mongo)			*
+ *											*
+ ******************************************	*/
+var Shop 			= require("./models/shop"),
+	Comment 		= require("./models/comment"),
+	User 			= require("./models/user");
 
 
-// USING EXPRESS ROUTER -- REQUIRE ROUTES
-var commentRoutes = require("./routes/comments"),
-	shopRoutes = require("./routes/shops"),
-	indexRoutes = require("./routes/index");
+
+/********************************************
+ *											*
+ *				Link Router					*
+ *											*
+ ******************************************	*/
+var commentRoutes 	= require("./routes/comments"),
+	shopRoutes 		= require("./routes/shops"),
+	indexRoutes 	= require("./routes/index");
+
 
 
 // CONNECT MONGOOSE API TO MLAB DB SERVER
 mongoose.connect("mongodb://tyler:coffeepass1@ds221115.mlab.com:21115/coffeecritic", {useNewUrlParser: true});
+
 
 
 // SERVER CONFIG A
@@ -35,12 +50,14 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 
+
 // USER AUTHENTICATION CONFIG W/ PASSPORTJS
 app.use(require("express-session")({
 	secret: "Secret key used for the db passwords",
 	resave: false,
 	saveUninitialized: false
 }));
+
 
 
 // SERVER CONFIG DEPENDENT ON A || PASSPORT
@@ -58,16 +75,20 @@ app.use(function(req, res, next){
 });
 //seedDB();
 
+
 // CONNECT ROUTES
 app.use("/", indexRoutes);
 app.use("/shops", shopRoutes);
 app.use("/shops/:id/comments", commentRoutes);
 
 
+
 // BUILD FOR DEPLOYMENT ON HEROKU TEST SERVER -- USE PROCESS ENVIRONMENT VARIABLES TO LISTEN
 // app.listen(process.env.PORT, process.env.IP, function(){
 // 	console.log("Server started successfully");
 // });
+
+
 
 //Listen for requests on local machine
 app.listen(3000, function(){
@@ -76,7 +97,11 @@ app.listen(3000, function(){
 
 //local debug
 
-
+/********************************************
+ *											*
+ *			Section Heading					*
+ *											*
+ ******************************************	*/
 
 
 

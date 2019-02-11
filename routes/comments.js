@@ -13,7 +13,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
         if(err){
             console.log(err);
         } else {
-             res.render("comments/new.ejs", {queriedShop: queriedShop});
+             res.render("comments/new.ejs", {shop: queriedShop});
         }
     })
 });
