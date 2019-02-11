@@ -65,11 +65,10 @@ app.use("shops/:id/comments", commentRoutes);
 
 
 // BUILD FOR DEPLOYMENT ON HEROKU TEST SERVER -- USE PROCESS ENVIRONMENT VARIABLES TO LISTEN
-// app..listen(8080, 127.0.0.1, function(){
-// 	console.log("Server started successfully");
-// });
-const port = 3000;
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app..listen(process.env.PORT, process.env.IP, function(){
+	console.log("Server started successfully");
+});
+
 
 
 
