@@ -64,7 +64,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 
 
 // SHOW ROUTE - SHOW SELECTED SHOP
-router.get("/:id",  ,function(req, res){
+router.get("/:id", function(req, res){
     //find the shop with provided ID - IMPORTANT: MUST POPULATE COMMENT ARRAY
     Shop.findOne({"_id": req.params.id}).populate("comments").exec(function(err, queriedShop){
         if(err){
