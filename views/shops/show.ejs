@@ -21,7 +21,7 @@
                     </p>
                     <% if(currentUser && shop.author.id.equals(currentUser._id)){ %>
                         <a class="btn btn-xs btn-warning" href="/shops/<%= shop._id %>/edit">Edit</a>
-                        <form id="delete-form" action="/shops/<%= campground._id %>?_method=DELETE" method="POST">
+                        <form id="delete-form" action="/shops/<%= shop._id %>?_method=DELETE" method="POST">
                             <button class="btn btn-xs btn-danger">Delete</button>
                         </form>
                     <% }%>
