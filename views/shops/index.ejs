@@ -6,7 +6,7 @@
 <% include ../partials/header %> 
 
  <div class="container">
-     <header class="jumbotron">
+     <header class="jumbotron text-center">
          <div class="container">
              <h1>Welcome To Coffee Critic!</h1>
              <p>View our hand-picked campgrounds from all over the world</p>
@@ -16,20 +16,20 @@
          </div>
      </header>
      
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-        <% shops.forEach(function(shop){ %>
-            <div class="col-md-3 col-sm-6">
-                <div class="thumbnail">
-                   <img src="<%= shop.image %>">
-                   <div class="caption">
-                       <h4><%= shop.name %></h4>
-                   </div>
-                   <p>
-                       <a href="/shops/<%= shop._id %>" class="btn btn-primary">More Info</a>
-                   </p>
-                </div>
-            </div>
-        <% }); %>
+     <!-- <div class="row text-center" style="display:flex; flex-wrap: wrap;"> -->
+    <div class="row">
+      
+      <% shops.forEach(function(shop){ %>
+        <div class="col-4">
+          <div class="card text-center">
+            <img src="<%= shop.image %>" class="card-img-top">
+            <h3 class="card-title"><%= shop.name %></h3>
+            <a class="btn btn-sm btn-primary mx-auto" href="/shops/<%=shop._id%>">More Info</a>
+          </div>
+        </div>
+      
+      <% }); %>
+    
     </div>
 </div>
 
