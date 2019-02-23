@@ -1,8 +1,6 @@
-/********************************************
- *											*
- *			Install Dependencies			*
- *											*
- ******************************************	*/
+/*******************
+Install Dependencies
+*******************/
 var express 		= require("express"),
 	app 			= express(),
 	bodyParser 		= require("body-parser"),			/*DEPENDENCY*/	//pull data from form in req object
@@ -14,23 +12,17 @@ var express 		= require("express"),
 	seedDB 			= require("./seeds");
 
 
-
-/********************************************
- *											*
- *		Import Data Models (Mongo)			*
- *											*
- ******************************************	*/
+/*************************
+Import Data Models (Mongo)
+*************************/
 var Shop 			= require("./models/shop"),
 	Comment 		= require("./models/comment"),
 	User 			= require("./models/user");
 
 
-
-/********************************************
- *											*
- *				Link Router					*
- *											*
- ******************************************	*/
+/**********
+Link Router
+**********/
 var commentRoutes 	= require("./routes/comments"),
 	shopRoutes 		= require("./routes/shops"),
 	indexRoutes 	= require("./routes/index");
@@ -91,7 +83,7 @@ app.use("/shops/:id/comments", commentRoutes);
 
 
 //Listen for requests on local machine
-app.listen(3000, function(){
+app.listen(process.env.PORT, process.env.IP, function(){
 	console.log("Server running on local machine");
 });
 
