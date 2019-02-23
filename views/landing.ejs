@@ -1,10 +1,14 @@
 <% include partials/header %>
 
-<h1>Landing Page!</h1>
+<div class="container">
+	<div class="jumbotron text-center">
+		<h1>Coffee Critic</h1>
+		<p>Welcome to Coffee Critic</p>
+		<a href="/shops">View All Coffe Shops</a>
+	</div>
+</div>
 
-<p>Welcome to Coffee Critic</p>
 
-<a href="/shops">View All Coffe Shops</a>
  
  		
 		
@@ -19,19 +23,21 @@
   			
 
   			<script type="text/javascript">
-  				var shopImages = [];
-  				var numShops = 1;
-  				var shops = <%-shopQuery%>;
-  				shops.forEach(function(shop){
-  					shopImages.push(shop.image);
-  					numShops++;
-  				});
-
+  				//On Load
   				$(function(){
+  					//Hardcoded image array (links to stock photo)
+  					var images = [
+  						"https://images.unsplash.com/photo-1528402772935-4134bc18b474?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+  						"https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+  						"https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+  					];
+  					//change photo on set interval of 2 seconds (with index variable)
   					var index = 0;
   					setInterval(function(){
-  						$("body").css("background-image", "url(" + shopImages[index % numShops] + ")");
-  					}, 1500);
+  						$("body").css("background-image", "url(" + images[index] + ")");
+  						index++;
+  						index = index % 3;
+  					}, 2000);
   				});
   				
   			</script>
