@@ -15,10 +15,11 @@ var express 		= require("express"),
 /*************************
 Import Data Models (Mongo)
 *************************/
+console.log("Debug: before data models");
 var Shop 			= require("./models/shop"),
 	Comment 		= require("./models/comment"),
 	User 			= require("./models/user");
-
+console.log("Debug: After");
 
 /**********
 Link Router
@@ -83,7 +84,7 @@ app.use("/shops/:id/comments", commentRoutes);
 
 
 //Listen for requests on local machine
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(3000, function(){
 	console.log("Server running on local machine");
 });
 
