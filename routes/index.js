@@ -2,12 +2,21 @@ var express = require("express");
 var router  = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Shop = require("../models/shop");
 
 
 
 //ROOT - SHOW LANDING (MIGHT REMOVE)
 router.get("/", function(req, res){
-    res.render("landing.ejs");
+    Shop.find({}, function(err, allShops){
+      if (err) {
+        console.log(err);
+        res.render("landing.ejs");
+      } else {
+        console.log("db query passed");
+        res.render("landing.ejs", {shops:allShops});
+      }
+    });
 });
 
 
