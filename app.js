@@ -84,7 +84,7 @@ app.use("/shops/:id/comments", commentRoutes);
 
 
 //Listen for requests on local machine
-app.listen(3000, function(){
+app.listen(process.env.PORT, process.env.IP, function(){
 	console.log("Server running on local machine");
 });
 
