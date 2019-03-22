@@ -1,0 +1,17 @@
+.navbar {
+    width: 100%;
+}
+
+/* .navbar-brand {
+    padding: 0 15px;
+    height: 80px;
+    line-height: 80px;
+} */
+
+.navbar-dark .navbar-nav .nav-link {
+    font-size: 1.3rem;
+}
+
+.navbar-dark .navbar-brand {
+    font-size: 1.5rem;
+}

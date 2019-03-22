@@ -1,0 +1,48 @@
+<%include ../partials/header%>
+</div>
+
+<div class="container text-center">
+    <h2 class="mt-5">Search By City</h2>
+    <form action="/api/" method= "GET" class="d-flex justify-content-center header-search mb-4">
+        <input name="searchParam" type="text" placeholder="Philadelphia, Atlanta, San Diego...">
+        <button type="submit">Search</button>
+    </form>
+
+    <h4>Search results for <%=query%>...</h4>
+    
+    <div class="card-container">
+        <% searchResults.forEach(function(shop){ %>
+            <div class="card text-center d-inline-block w-100">
+                <img src="<%=shop.image%>" alt="Image of <%=shop.name%>" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title"><%=shop.name%></h5>
+                    <p class="card-text"><%=shop.location.city%>, <%=shop.location.state%></p>
+                    <a href="/shops/<%=shop._id%>" class="btn btn-secondary">View</a>
+                </div>
+            </div>
+        <% }); %>
+    </div> 
+    
+    <!--
+    <div class="container">
+        
+        <%searchResults.forEach(function(shop) {%>
+        
+            <a href="/shops/<%=shop._id%>" style="color: black; text-decoration: none; "><div style="border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 0.25rem; margin-bottom: 1.2rem;" class="row">
+                <div class="col-4">
+                    <img src="<%=shop.image%>" alt="" style="width: 90px; height: 90px; padding: 8px;">
+                </div>
+                <div class="col-8 text-left">
+                    <h5><%=shop.name%></h5>
+                    <p style="margin-bottom: 0"><%=shop.location.city%>, <%=shop.location.state%></p>
+                    <p style="margin-bottom: 0">Rating: <%=shop.rating%></p>
+                </div>
+            </div></a>
+
+        <%})%>
+    </div>
+    -->
+    
+</div>
+
+<%include ../partials/footer%>

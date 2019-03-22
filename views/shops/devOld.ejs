@@ -1,0 +1,96 @@
+<%include ../partials/header%>
+</div>
+
+<div class="container-fluid ">
+	<div class="row">
+		
+		<div class="col-2 text-center ">
+			<ul class="nav flex-column sticky-util-1">
+				<li class="nav-item">
+					<a class="nav-link side-nav" href="#">Coffee Shops</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link side-nav" href="#">Brands</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link side-nav" href="#">Gear</a>
+				</li>
+				<li class="nav-item">
+					<img src="https://lh3.ggpht.com/3q0W5UdEjoVjCVFo4l5aJoAg2-ElBSpBSvcMwuGKG_RNyrePKwSA54ZMaqA_EpEBpBi00hF0=w120">
+				</li>
+			</ul>
+			
+		</div>
+
+		<div div class="col-7 text-center">
+			
+			<h2>Featured Coffee Shops</h2>
+			<h3><span>Sort</span></h3>
+
+			<% shops.forEach(function(shop){ %>
+				<div class="card mb-3 w-100" style="height: 150px">
+					<div class="row no-gutters align-items-center h-100">
+						<div class="col-md-4 pl-2">
+      						<img src="<%=shop.image%>" class="card-img" alt="...">
+    					</div>
+    					<div class="col-md-8">
+      						<div class="card-body text-center">
+        						<h5 class="card-title"><%=shop.name%></h5>
+        						<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      						</div>
+    					</div>
+					</div>
+				</div>
+			<% }); %>
+		</div>
+
+		
+		<div class="col-3 justify-content-center">
+			<div id="map"></div>
+			<img src="https://lh4.ggpht.com/ike-jviZQ32RHuhkwLcAt_9vdpBX1oWKU00NX7QRe5GPl7-5sapzZ0u91_ssg_-Ednak2Hj-Hg=w162" style="display: block; margin: 25px auto">
+		</div>
+		
+	</div>
+	
+</div>
+
+
+<nav class="nav bg-dark navbar-dark nav-justified align-items-center">
+	<span class="nav-item"><a href="#" style="color: black!important">Sitemap</a></span>
+	<span class="nav-item" style="color: black!important">Copyright Coffee Critic 2019</span>
+	<span class="nav-item">
+		<a class="navbar-brand" href="#"><i class="fab fa-facebook-f"></i></a>
+		<a class="navbar-brand" href="#"><i class="fab fa-twitter"></i></a>
+		<a class="navbar-brand" href="#"><i class="fab fa-instagram"></i></a>
+	</span>
+		
+</nav>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	
+	function initMap() {};
+
+	$(() => {
+		initMap = function(){
+  		// The location of Uluru
+  		var bb = {lat: 40.243, lng: -75.287};
+  		// The map, centered at Uluru
+  		var map = new google.maps.Map(
+      	document.getElementById('map'), {zoom: 14, center: bb});
+  		// The marker, positioned at Uluru
+  		var marker = new google.maps.Marker({position: bb, map: map});
+		}
+	});
+		
+	
+	// Initialize and add the map
+	
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_XYdUxCuU1ZXxgVMNzqLQUC5meAdRi78&callback=initMap">
+</script>
+
+<%include ../partials/devFooter%>
