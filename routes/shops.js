@@ -28,7 +28,15 @@ router.get("/", function(req, res){
     });
 });
 
-
+router.get("/dev", function(req, res){
+  Shop.find({}, function(err, allShops){
+    if (err){
+      console.log(err);
+    } else {
+      res.render("shops/search.ejs", {shops:allShops});
+    }
+  });
+});
 
 //CREATE ROUTE - ADD TO DB (MIDDLEWARE HANDLES AUTH PROMPT AND DB QUERY)
 router.post("/", middleware.isLoggedIn, function(req, res){
@@ -36,19 +44,45 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
+    var street = req.body.street;
+    var city = req.body.city;
+    var state = req.body.state;
+    var zip = req.body.zip;
+    var lat = req.body.metalat;
+    var lng = req.body.metalng;
+    var rating = req.body.rating;
+    var menu = req.body.menu;
     var author = {
         id: req.user._id,
         username: req.user.username
     }
     //compile values into JSON object
-    var newShop = {name: name, image: image, description: desc, author:author}
+    var newShop = {
+        name: name,
+        location: {
+            street: street,
+            city: city,
+            state: state,
+            zip: zip,
+            meta: {
+                lat: lat,
+                lng: lng
+            }
+        },
+        image: image,
+        rating: rating,
+        description: desc,
+        menu: menu,
+        author: author
+    }
     // Create a new campground and save to DB
+    
     Shop.create(newShop, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
             //redirect back to shops page
-            //console.log(newlyCreated);
+            console.log(newlyCreated);
             res.redirect("/shops");
         }
     });

@@ -4,6 +4,28 @@ var Comment   = require("./models/comment");
 
 var data = [
     {
+        name: "Backyard Beans",
+        location: {
+            street: "408 W Main St",
+            city: "Lansdale",
+            state: "PA",
+            zip: 19446,
+            meta: {
+                lat: 40.243,
+                lng: -75.287
+            }
+        },
+        image: "/photos/backyard-beans.jpeg",
+        rating: 5,
+        description: "Backyard Beans Coffee Company is a local coffee company and shop that offers a variety of responsibly sourced coffees. Their beans are roasted on site making for the freshest of coffee experiences. If you're looking for a new regular coffee shop to go to, look no further than Backyard Beans in Lansdale, Pennsylvania!",
+        menu: "https://www.backyardbeans.com/cafe"
+    }
+]
+
+
+
+var dataOld = [
+    {
         name: "Backyard Beans", 
         image: "https://static1.squarespace.com/static/5341526de4b089b274aedd6e/5a80b3ba0d92973fecf2ed21/5a80b3baec212d81180c0816/1518384063605/Backyard+Beans+Grand+Opening+%282+of+12%29.jpg?format=1000w",
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"

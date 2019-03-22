@@ -1,58 +1,92 @@
 <% include ../partials/header %>
+</div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <p class="lead">Coffee Critic</p>
-            <div class="list-group">
-                <li class="list-group-item active">Info 1</li>
-                <li class="list-group-item">Info 2</li>
-                <li class="list-group-item">Info 3</li>
-            </div>
+    <img class="w-75 mx-auto d-block show-image-top" src="<%=shop.image%>" alt="">    
+    <div class="row w-75 mx-auto">
+        <div class="col-sm-12 col-md-8">
+            <div>
+                <h3 class="d-inline-block"><%=shop.name%> </h3>
+                <%if (currentUser && shop.author.id.equals(currentUser._id)) {%>
+                    <a href="/shops/<%=shop._id%>/edit"> <i class="far fa-edit"></i>(edit)</a>
+                <% }%>
+            </div>    
+        
+            <h5>Rating: <%=shop.rating%></h5>
+            <p><%=shop.description%></p>
+
+            
+
+            
+            
+
         </div>
-        <div class="col-md-9">
-            <div class="thumbnail">
-                <img class="img-responsive" src="<%= shop.image %>">
-                <div class="caption-full">
-                    <!--<h4 class="pull-right">$9.00/night</h4>-->
-                    <h4><a><%=shop.name%></a></h4>
-                    <p><%= shop.description %></p>
-                    <p>
-                        <em>Submitted By <%= shop.author.username %></em>
-                    </p>
-                    <% if(currentUser && shop.author.id.equals(currentUser._id)){ %>
-                        <a class="btn btn-xs btn-warning" href="/shops/<%= shop._id %>/edit">Edit</a>
-                        <form id="delete-form" action="/shops/<%= shop._id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-xs btn-danger">Delete</button>
-                        </form>
-                    <% }%>
-                </div>
-            </div>
-            <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success" href="/shops/<%= shop._id %>/comments/new">Add New Comment</a>
-                </div>
-                <hr>
-                <% shop.comments.forEach(function(comment){ %>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <strong><%= comment.author.username %></strong>
-                            <span class="pull-right">10 days ago</span>
-                            <p>
-                                <%= comment.text %> 
-                            </p>
-                        <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                            <a class="btn btn-xs btn-warning" 
-                               href="/shops/<%=shop._id %>/comments/<%=comment._id %>/edit">Edit</a>
-                            <form id="delete-form" action="/shops/<%=shop._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
-                                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                            </form>
-                        <% } %>
+        <div class="col-sm-12 col-md-4 text-center">
+            <h4>Location</h4>    
+            <div id="map" data-lat="<%=shop.location.meta.lat%>" data-lng="<%=shop.location.meta.lng%>"></div>
+            <p><%=shop.location.street%> <%=shop.location.city%>, <%=shop.location.state%>, <%=shop.location.zip%></p>
+        </div>
+        <hr>
+    </div>
+    
+    
+    <div class="container w-75 mx-auto">
+    <h4 class="d-inline-block">Comments</h4>
+    <% if (shop.comments.length === 0) {%>
+        <p class="mb-0">No comments yet</p>
+    <%}%>    
+    <div class="row mb-3">
+            <% shop.comments.forEach(function(comment){%>
+                <div class="col-sm-12 col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body justify-content-center">
+                            <p class="card-text"><%=comment.text%></p>
+                            <p class="card-text">-<%=comment.author.username%></p>
+                            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
+                                <a class="card-link" href="/shops/<%=shop._id%>/edit"> <i class="far fa-edit"></i>(edit)</a>
+                            <% }%>
                         </div>
                     </div>
-                <% }) %>
-            </div>
+                </div>
+            <% });%>
         </div>
+        
+        <form action="/shops/<%=shop._id%>/comments/new" method="POST" id="same-page-review">
+            <div class="form-group">
+                <label for="reviewText">Leave a Comment for <%=shop.name%></label>
+                <textarea class="form-control" name="comment[text]" id="reviewText" rows="4" placeholder="Leave your comment here"></textarea>
+                <button class="btn btn-secondary d-block ml-auto mt-3" type="submit">Submit</button>
+            </div>    
+        </form>
     </div>
 </div>
+
+
+
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" 
+			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>
+    function initMap() {};
+
+    $(() => {
+        var latFromShop = parseFloat($('#map').attr('data-lat'));
+        var lngFromShop = parseFloat($('#map').attr('data-lng'));
+        
+        initMap = function(){
+        // The location of Uluru
+        
+        var bb = {lat: latFromShop, lng: lngFromShop};
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 14, center: bb});
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({position: bb, map: map});
+        }
+    });
+</script>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_XYdUxCuU1ZXxgVMNzqLQUC5meAdRi78&callback=initMap">
+</script>
 
 <% include ../partials/footer %>

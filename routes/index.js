@@ -11,10 +11,9 @@ router.get("/", function(req, res){
     Shop.find({}, function(err, allShops){
       if (err) {
         console.log(err);
-        res.render("landing.ejs");
+        res.redirect("/shops");
       } else {
-        console.log("db query passed");
-        res.render("landing.ejs", {shops:allShops});
+        res.render("shops/index.ejs", {shops:allShops});
       }
     });
 });
