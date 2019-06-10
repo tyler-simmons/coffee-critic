@@ -1,29 +1,16 @@
 var express     = require('express'),
     router      = express.Router(),
-    Shop        = require('../models/shop'),
-    middleware  = require("../middleware");
+    User        = require("../models/user");
 
-    router.get('/', function(req, res) {
-        //req.params.searchParam
-        let queryParam = req.query.searchParam;
-        Shop.find({
-            "location.city" : queryParam
-        }, function(err, searchResults) {
+    router.get("/usernames/checkAvailability/:username", function(req, res) {
+        User.count({username : req.params.username}, function(err, count) {
             if (err) {
-                console.log(err);
-                res.send("error");
-            } else {
-                res.render('shops/search.ejs', {
-                    searchResults: searchResults, 
-                    query: queryParam
-                });
+                res.status(500).json({
+                    error : 'internal error'
+                })
             }
+            count < 1 ? res.json({unique : true}) : res.json({unique : false})
         })
-    });
-
-    router.get('/*', function(req, res) {
-        console.log(req.query);
-        res.send("test");
     })
 
 module.exports = router;

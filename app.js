@@ -32,8 +32,9 @@ var Shop 			= require("./models/shop"),
 */
 var commentRoutes 	= require("./routes/comments"),
 	shopRoutes 		= require("./routes/shops"),
-	indexRoutes 	= require("./routes/index");
-	APIRoutes		= require("./routes/api.js");
+	indexRoutes 	= require("./routes/index"),
+	APIRoutes		= require("./routes/api.js"),
+	userRoutes		= require("./routes/user.js");
 
 
 
@@ -98,6 +99,7 @@ app.use("/", indexRoutes);
 app.use("/shops", shopRoutes);
 app.use("/shops/:id/comments", commentRoutes);
 app.use("/api", APIRoutes);
+app.use("/user", userRoutes);
 
 
 //Listen for requests on local machine

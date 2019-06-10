@@ -1,0 +1,12 @@
+<% include ../partials/header %> 
+
+    <h1>Welcome <%= currentUser.username %></h1>
+    <a href="/logout">logout</a>
+    <h2>Your shops</h2>
+    <ul>
+        <% shops.forEach(function(shop) { %> 
+            <li><a href="/shops/<%= shop._id %>"><%=shop.name%></a></li>
+        <% }); %>
+    </ul>
+ 
+<% include ../partials/footer %> 

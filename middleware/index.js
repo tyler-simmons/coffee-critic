@@ -1,6 +1,7 @@
 // INCLUDE REQUIRED MODELS -- NEEDED FOR AUTH
-var Campground = require("../models/shop");
-var Comment = require("../models/comment");
+const Campground = require("../models/shop");
+const Comment = require("../models/comment");
+const User = require("../models/user"); 
 
 var middlewareObj = {};
 
@@ -54,6 +55,18 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
         req.flash("error", "You need to be logged in to do that");
         res.redirect("back");
     }
+}
+
+middlewareObj.isLoggedInAndCorrectProfile = function(req, res, next) {
+    if(req.isAuthenticated()){
+        if (req.params.id == req.user._id) {
+            return next();
+        }
+        req.flash("error", "This is not your profile");
+    res.redirect("/shops");
+    }
+    req.flash("error", "You need to be logged in to do that");
+    res.redirect("/login");
 }
 
 middlewareObj.isLoggedIn = function(req, res, next){

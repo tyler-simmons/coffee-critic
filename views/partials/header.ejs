@@ -33,7 +33,7 @@
                     </li>
                 <% }else{ %>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#"><%=currentUser.username%></a>
+                        <a class="nav-link" href="/user/<%= currentUser._id %>"><%=currentUser.username%></a>
                     </li>
                 <%}%>
             </ul>

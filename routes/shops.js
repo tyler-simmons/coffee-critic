@@ -6,12 +6,36 @@ var express = require("express");
 var router  = express.Router();
 var Shop = require("../models/shop");
 var middleware = require("../middleware");
+const googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyB0BRyIcMXjAZPwwCe8ZySDf3uQIBgjGCA'
+});
+
 
 // ==================================================================================== //
 // router.METHOD("route", middleware, callback){}                                       //
 // on http request of type METHOD to "route"                                            // 
 // middleware (code runs) -> next() (called in middleware) -> callback (anonymous here) //
 // ==================================================================================== //
+
+
+
+//middleware to get google geocode API response
+//sets the response object to res.locals
+function getCoordinates(req, res, next) {
+    //foramt address line from form body input
+    let addrStr = `${req.body.street} ${req.body.city}, ${req.body.state}, ${req.body.zip}`
+    googleMapsClient.geocode({
+        address : addrStr
+    }, function(err, response) {
+        if (!err) {
+            //store response and forward
+            res.locals.googleApiResponse = response.json;
+            next();
+        } else {
+            next(err);
+        }
+    });
+}
 
 
 
@@ -28,62 +52,45 @@ router.get("/", function(req, res){
     });
 });
 
-router.get("/dev", function(req, res){
-  Shop.find({}, function(err, allShops){
-    if (err){
-      console.log(err);
-    } else {
-      res.render("shops/search.ejs", {shops:allShops});
-    }
-  });
-});
 
 //CREATE ROUTE - ADD TO DB (MIDDLEWARE HANDLES AUTH PROMPT AND DB QUERY)
-router.post("/", middleware.isLoggedIn, function(req, res){
-    // get data from form and add to campgrounds array
-    var name = req.body.name;
-    var image = req.body.image;
-    var desc = req.body.description;
-    var street = req.body.street;
-    var city = req.body.city;
-    var state = req.body.state;
-    var zip = req.body.zip;
-    var lat = req.body.metalat;
-    var lng = req.body.metalng;
-    var rating = req.body.rating;
-    var menu = req.body.menu;
-    var author = {
-        id: req.user._id,
-        username: req.user.username
-    }
-    //compile values into JSON object
-    var newShop = {
-        name: name,
-        location: {
-            street: street,
-            city: city,
-            state: state,
-            zip: zip,
-            meta: {
-                lat: lat,
-                lng: lng
-            }
-        },
-        image: image,
-        rating: rating,
-        description: desc,
-        menu: menu,
-        author: author
-    }
-    // Create a new campground and save to DB
+router.post("/", middleware.isLoggedIn, getCoordinates ,function(req, res){
     
-    Shop.create(newShop, function(err, newlyCreated){
-        if(err){
-            console.log(err);
+    //get coordinates from middleware
+    let coordinates = res.locals.googleApiResponse.results[0].geometry.location;
+    
+    //build new shop object
+    let newShop = {
+        name : req.body.name,
+        image : req.body.image,
+        description : req.body.description,
+        menu : req.body.menu,
+        author : {
+            id : req.user._id,
+            username : req.user.username
+        },
+        location : {
+            street : req.body.street,
+            city : req.body.city,
+            state : req.body.state,
+            zip : req.body.zip,
+            meta : {
+                //lat and lng from google geocode API
+                lat : coordinates.lat,
+                lng : coordinates.lng
+            }
+        }
+    }
+
+    //create new shop document, save to db, redirect to that shop's 
+    //page
+    Shop.create(newShop, function(error, newlyCreated){
+        if(error){
+            console.log(error);
+            res.redirect('/shops')
         } else {
-            //redirect back to shops page
-            console.log(newlyCreated);
-            res.redirect("/shops");
+            //redirecct to newly created shop
+            res.redirect(`/shops/${newlyCreated._id}`);
         }
     });
 });
@@ -103,6 +110,7 @@ router.get("/:id", function(req, res){
     Shop.findOne({"_id": req.params.id}).populate("comments").exec(function(err, queriedShop){
         if(err){
             console.log(err);
+            res.redirect('/shops');
         } else {
             //console.log(queriedShop);
             //render show template with that campground
@@ -117,7 +125,20 @@ router.get("/:id", function(req, res){
 // Validate ownership before retrieving form
 router.get("/:id/edit", middleware.checkShopOwnership, function(req, res){
     Shop.findOne({"_id": req.params.id}, function(err, queriedShop){
+        if (err) {
+            res.redirect('/shops')
+        }
         res.render("shops/edit.ejs", {shop: queriedShop});
+    });
+});
+
+
+router.get("/:id/edit/updateAddress", middleware.checkShopOwnership, function(req, res) {
+    Shop.findOne({"_id" : req.params.id}, function(err, queriedShop) {
+        if (err) {
+            res.redirect('/shops')
+        }
+        res.render("shops/updateAddress.ejs", {shop: queriedShop});
     });
 });
 
@@ -126,14 +147,37 @@ router.get("/:id/edit", middleware.checkShopOwnership, function(req, res){
 // UPDATE ROUTE (REQUIRES METHOD-OVERRIDE) - PUT REQUEST TO UPDATE SHOP DB ENTRY
 router.put("/:id",middleware.checkShopOwnership, function(req, res){
     // find and update the correct shop
-    Shop.findOneAndUpdate({"_id": req.params.id}, req.body.shop/*Update entire object*/, function(err, updatedCampground){
+    Shop.findOneAndUpdate({"_id": req.params.id}, req.body.shop, function(err, updatedCampground){
        if(err){
            res.redirect("/shops");
        } else {
-           //redirect somewhere(show page)
+           
+            //redirect somewhere(show page)
            res.redirect("/shops/" + req.params.id);
        }
     });
+});
+
+router.put("/:id/updateAddress", middleware.checkShopOwnership, getCoordinates, function(req, res){
+    let coordinates = res.locals.googleApiResponse.results[0].geometry.location;
+    Shop.findOneAndUpdate({"_id" : req.params.id}, {
+        location : {
+            street : req.body.street,
+            city : req.body.city,
+            state : req.body.state,
+            zip : req.body.zip,
+            meta : {
+                lat : coordinates.lat,
+                lng : coordinates.lng
+            }
+        }
+    }, function(err, updatedShop) {
+        if (err) {
+            res.redirect('/shops')
+        } else {
+            res.redirect(`/shops/${req.params.id}`);
+        }
+    });  
 });
 
 // DESTROY CAMPGROUND ROUTE (REQUIRES METHOD-OVERRIDE)

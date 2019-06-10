@@ -1,9 +1,36 @@
 <% include ./partials/header %> 
-<h1>Sign Up!</h1>
+        <div class="container text-center">
+            <h1>Sign Up!</h1>
 
-<form action="/register" method="post">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <button>Sign Up</button>
-</form>
-<% include ./partials/footer %>
+            <form action="/register" method="post" >
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="username" id="username" class="form-control">
+                </div>
+                <div class="form-group" id="checkAvailabilityContainer">
+                    <button class="btn btn-secondary" id="usernameCheck" type="button">Check availability</button>
+                    <p id="username-message"></p>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="password" id="password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password-confirm" placeholder="confirm password" id="confirm" class="form-control">
+                </div>
+
+                <button class="btn btn-primary mb-3">Sign Up</button>
+            </form>
+        </div>
+        
+        <footer class="container-fluid bg-dark text-center">
+            <p class="mb-0" style="color: white">&copy; Coffee Critic 2019</p>
+        </footer>
+        
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js" 
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js" 
+            integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp" crossorigin="anonymous"></script>
+        <script src="/js/register.js"></script>
+	</body>
+</html>
