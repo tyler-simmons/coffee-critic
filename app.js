@@ -11,8 +11,11 @@ var express 		= require("express"),
 	passport 		= require("passport"),				/*DEPENDENCY*/	//user authentication (with sessions)
 	LocalStrategy 	= require("passport-local"),		/*DEPENDENCY*/	//Non-db passport strategy (not in use)
 	methodOverride 	= require("method-override"),		/*DEPENDENCY*/	//Allow post override to PUT | DELETE
-	seedDB 			= require("./seeds"),
+	dotenv			= require('dotenv');
 	port			= process.env.PORT || 3000;
+
+
+dotenv.config();
 
 
 /**
@@ -39,7 +42,11 @@ var commentRoutes 	= require("./routes/comments"),
 
 
 // CONNECT MONGOOSE API TO MLAB DB SERVER
-mongoose.connect("mongodb://tyler:coffeepass1@ds221115.mlab.com:21115/coffeecritic", {useNewUrlParser: true});
+mongoose.connect(process.env.MONGOOSE_URI, {useNewUrlParser: true}, function(err) {
+	if (!err) {
+		console.log('mongoose connected');
+	}
+});
 
 
 

@@ -7,7 +7,7 @@ var router  = express.Router();
 var Shop = require("../models/shop");
 var middleware = require("../middleware");
 const googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyB0BRyIcMXjAZPwwCe8ZySDf3uQIBgjGCA'
+    key: process.env.API_KEY
 });
 
 
@@ -102,7 +102,28 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
    res.render("shops/new.ejs"); 
 });
 
+router.get('/search', function(req, res) {
+    
+    
+    var query = new RegExp(`${req.query.searchParam}`, `i`);
+    console.log(query)
+    Shop.find({
+        'location.city' :  query
+    }, function (err, doc) {
+       if (err) {
+           console.log('error');
+           res.redirect('/');
+       } else {
+        console.log(doc)   
+        res.render('shops/search.ejs', {
+               searchResults : doc,
+               query : req.query.searchParam
+           })
+       } 
 
+    })
+    
+})
 
 // SHOW ROUTE - SHOW SELECTED SHOP
 router.get("/:id", function(req, res){
@@ -190,6 +211,8 @@ router.delete("/:id",middleware.checkShopOwnership, function(req, res){
       }
    });
 });
+
+
 
 
 module.exports = router;

@@ -65,6 +65,11 @@
 
 <script src="http://code.jquery.com/jquery-3.3.1.min.js" 
 			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_XYdUxCuU1ZXxgVMNzqLQUC5meAdRi78">
+</script>
+
 <script>
     function initMap() {};
 
@@ -83,10 +88,16 @@
         var marker = new google.maps.Marker({position: bb, map: map});
         }
     });
+
+    // console.log('calling initMap')
+    // initMap();
 </script>
 
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_XYdUxCuU1ZXxgVMNzqLQUC5meAdRi78&callback=initMap">
+<script>
+    setTimeout(() => {
+        initMap();
+    }, 250);
 </script>
+
 
 <% include ../partials/footer %>
