@@ -68,11 +68,23 @@ app.use(flash());
 | Setup for passport authentication middleware
 |--------------------------------------------------
 */
-app.use(require("express-session")({
-	secret: "Secret key used for the db passwords",
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
+app.use(session({
+	secret: process.env.SECRET,
 	resave: false,
-	saveUninitialized: false
-}));
+	saveUninitialized: false,
+	store: new MongoStore({
+		url: process.env.MONGO_STORE_URI,
+	})
+}))
+
+// app.use(require("express-session")({
+// 	secret: "Secret key used for the db passwords",
+// 	resave: false,
+// 	saveUninitialized: false
+// }));
 
 
 
