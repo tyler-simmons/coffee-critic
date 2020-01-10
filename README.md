@@ -15,3 +15,8 @@ Coffee Critic is a web application that allows users to find and discuss local c
 * Javascript
   * JQuery
 * Google Maps Web API
+## Screenshots
+### Coffee Shop Page
+### Account Creation
+### Search
+### Comments
