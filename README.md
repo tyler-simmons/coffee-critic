@@ -4,6 +4,9 @@ Coffee Critic is a web application that allows users to find and discuss local c
 ## Technologies Used
 ### Backend Web Server
 
+| foo | bar |
+| *** | *** |
+| baz | boo |
 
 ## Screenshots
 ### Coffee Shop Page
