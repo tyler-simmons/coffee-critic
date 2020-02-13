@@ -1,15 +1,12 @@
-# CoffeeCritic
-## Description
-Coffee Critic is a web application that allows users to find and discuss local coffee shops. Users can create an account and add their shop or start commenting right away! Visit [Coffee Critic](https://www.coffeecritic.net)
-## Technologies Used
-### Backend Web Server
+## Backend Architecture
+__Web Server:__ Node.js <br />
+__Database__: Mongodb
 
-| foo | bar |
-| *** | *** |
-| baz | boo |
+| Technology/Framework  | Purpose |
+| ------------- | ------------- |
+| Express.js  | Node.js Web Framework  |
+| Embedded Javascript (EJS)  | Template engine for server-side rendering  |
+| Mongoose ODM | Database object mapping framework for MVC pattern |
+| Passport | Server authentication and session management library |
+| Google geocoding API | Geocoding of address records for database normalization |
 
-## Screenshots
-### Coffee Shop Page
-### Account Creation
-### Search
-### Comments
